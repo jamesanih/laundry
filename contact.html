@@ -468,8 +468,9 @@
 					$(form).ajaxSubmit({
 						type: "POST",
 						data: $(form).serialize(),
-						url: "../php/email.php",
-						success: function () {
+						url: "../swiftmailer/index.php",
+						success: function (response) {
+							alert(response);
 							$('#success').fadeIn();
 							$('#contactform').each(function () {
 								this.reset();

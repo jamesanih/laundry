@@ -1,6 +1,6 @@
 <?php
-require ("_lib/class.phpmailer.php");
-$mail = new PHPMailer();
+require_once ("phpmailer/class.phpmailer.php");
+    $mail = new PHPMailer;
 function filter($data) {
 	$data = trim(htmlentities(strip_tags($data)));
 	
@@ -9,33 +9,36 @@ function filter($data) {
 	
 	return $data;
 }
+echo "email";
 
-$to = "uchennaanih16@gmail.com";
-$name =  filter($_POST['name']);
-$subject = "Message From user";
-$email = filter($_POST['email']);
-$phone = filter($_POST['phone']);
-$message = filter($_POST['message']);
+$mail->From = "anihuchenna16@gmail.com";
+$mail->FromName = "Full Name";
 
+//To address and name
+$mail->addAddress("uchennaanih16@gmail.com");
+//$mail->addAddress("recepient1@example.com"); //Recipient name is optional
 
-$mail->IsSMTP();//set mailer to use SMTP
-$mail->From = $email;
-$mail->FromName = $name;
-$mail->Host = "smtp.gmail.com";
-$mail->SMTPAuth = true;
-$mail->SMTPSecure = 'tls';
-$mail->Port = 587;
-$mail->Username = "anihuchenna16@gmail.com";
-$mail->Password = "nomsky24";
-$mail->WordWrap = 70;
-$mail->IsHTML(true);
-$mail->Subject = $subject;
-$mail->Body = $message;
+//Address to which recipient will reply
+$mail->addReplyTo("noreply@gmail.com", "Reply");
 
-if($mail->send()){
-    echo "email sent";
-}else {
-    echo "mail not sent". $mail->ErrorInfo;
+//CC and BCC
+$mail->addCC("cc@example.com");
+$mail->addBCC("bcc@example.com");
+
+//Send HTML or Plain Text email
+$mail->isHTML(true);
+
+$mail->Subject = "Subject Text";
+$mail->Body = "<i>Mail body in HTML</i>";
+$mail->AltBody = "This is the plain text version of the email content";
+
+if(!$mail->send()) 
+{
+    echo "Mailer Error: " . $mail->ErrorInfo;
+} 
+else 
+{
+    echo "Message has been sent successfully";
 }
 
 

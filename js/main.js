@@ -435,11 +435,12 @@ $document.ready(function () {
 				}
 			},
 			submitHandler: function (form) {
+				// alert('it');
 				$(form).ajaxSubmit({
 					type: "POST",
 					data: $(form).serialize(),
 					url: "order-form.php",
-					success: function () {
+					success: function (response) {
 						$('#success').fadeIn();
 						$('#orderForm').each(function () {
 							this.reset();
